@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陳昱凱是gay嗎?</title>
+<style>
+  :root{
+    --panel:rgba(18,26,36,.78); --line:rgba(120,150,175,.28);
+    --txt:#eef4fa; --muted:#aec0d2; --yes:#54b4ff; --no:#f0b429;
+    --accent:#54b4ff;
+    --mono:"SF Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    color:var(--txt); font-family:system-ui,"Noto Sans TC",sans-serif;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+    padding:28px 16px 48px; line-height:1.6;
+    background:
+      linear-gradient(180deg, rgba(8,12,18,.55) 0%, rgba(8,12,18,.78) 100%),
+      url('images/bg.jpg') center/cover no-repeat fixed;
+  }
+  @supports (-webkit-touch-callout: none){ body{background-attachment:scroll;} }
+  .wrap{width:100%;max-width:480px;}
+  h1{font-size:1.5rem;font-weight:800;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.5);}
+  .sub{color:var(--muted);font-size:.9rem;margin-bottom:24px;text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .card{background:var(--panel);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);}
+  .label{font-size:.82rem;color:var(--muted);margin-bottom:12px;}
+  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .opt{padding:18px 10px;border-radius:10px;border:1px solid var(--line);
+    background:rgba(255,255,255,.04);color:var(--txt);font-size:1.05rem;cursor:pointer;
+    transition:.15s;text-align:center;font-weight:600;}
+  .opt .emoji{font-size:1.5rem;display:block;margin-bottom:4px;}
+  .opt:active{transform:scale(.97);}
+  .opt.sel[data-val="yes"]{border-color:var(--yes);background:rgba(84,180,255,.16);color:var(--yes);}
+  .opt.sel[data-val="no"]{border-color:var(--no);background:rgba(240,180,41,.16);color:var(--no);}
+  .run{width:100%;padding:15px;border:none;border-radius:10px;background:var(--accent);
+    color:#0f1620;font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:4px;
+    box-shadow:0 6px 20px rgba(84,180,255,.35);}
+  .run:active{transform:scale(.99);}
+  .result{text-align:center;font-size:1.4rem;font-weight:800;padding:20px;
+    border-radius:12px;margin-top:12px;opacity:0;animation:show .4s .1s forwards;}
+  .result .big{font-size:2.2rem;display:block;margin-bottom:6px;}
+  .result img{width:100%;height:200px;object-fit:cover;border-radius:10px;
+    margin-bottom:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.4);}
+  .result.t{color:var(--yes);background:rgba(84,180,255,.14);border:1px solid rgba(84,180,255,.35);}
+  .result.f{color:var(--no);background:rgba(240,180,41,.14);border:1px solid rgba(240,180,41,.35);}
+  @keyframes show{to{opacity:1;transform:none;}}
+
+  /* 統計區 */
+  .stat-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .stat-total{font-size:.8rem;color:var(--muted);}
+  .bar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.08);margin-bottom:14px;}
+  .bar .y{background:var(--yes);transition:width .4s;}
+  .bar .n{background:var(--no);transition:width .4s;}
+  .rows{display:grid;gap:10px;}
+  .row{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);}
+  .row .name{font-weight:700;}
+  .row.y .name{color:var(--yes);}
+  .row.n .name{color:var(--no);}
+  .row .num{font-family:var(--mono);font-size:1.05rem;}
+  .row .pct{color:var(--muted);font-size:.8rem;margin-left:8px;}
+  .clear-btn{margin-top:14px;width:100%;padding:10px;border:1px solid var(--line);
+    background:transparent;color:var(--muted);border-radius:9px;font-size:.85rem;
+    cursor:pointer;transition:.15s;}
+  .clear-btn:hover{border-color:var(--no);color:var(--no);background:rgba(240,180,41,.08);}
+  .clear-btn:active{transform:scale(.99);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>陳昱凱是gay嗎?</h1>
+  <div class="sub">到底是不是?</div>
+
+  <div class="card">
+    <div class="label">點選你的答案</div>
+    <div class="inputs">
+      <button class="opt sel" data-val="yes"><span class="emoji">✔️</span>是GAY</button>
+      <button class="opt" data-val="no"><span class="emoji">✖️</span>不是GAY</button>
+    </div>
+  </div>
+
+  <button class="run" id="run">動動你的小手看答案 ▶</button>
+
+  <div class="card" id="out" style="display:none;">
+    <div id="result"></div>
+  </div>
+
+  <div class="card">
+    <div class="stat-head">
+      <div class="label" style="margin:0;">即時票數統計</div>
+      <div class="stat-total" id="total">共 0 票</div>
+    </div>
+    <div class="bar"><div class="y" id="barY" style="width:50%"></div><div class="n" id="barN" style="width:50%"></div></div>
+    <div class="rows">
+      <div class="row y"><div class="name">✔️ 是GAY</div><div><span class="num" id="numY">0</span><span class="pct" id="pctY">0%</span></div></div>
+      <div class="row n"><div class="name">✖️ 不是GAY</div><div><span class="num" id="numN">0</span><span class="pct" id="pctN">0%</span></div></div>
+      <button class="clear-btn" id="clearVotes">清除票數</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---------- 是/不是 選擇邏輯 ---------- */
+  let answer = "yes";
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel");
+      answer = b.dataset.val;   // 只做選取，按「執行」才計票
+    });
+  });
+
+  /* 結果區要顯示的兩張照片（是 / 不是） */
+  const IMG_YES = "images/yes.jpg";
+  const IMG_NO  = "images/no.jpg";
+
+  /* ---------- 執行：顯示結果 ---------- */
+  document.getElementById("run").addEventListener("click",()=>{
+    const isYes = (answer === "yes");
+    vote(answer);            // 按下執行 → 計入一票
+    const out = document.getElementById("out");
+    const resBox = document.getElementById("result");
+    out.style.display = "block";
+    resBox.innerHTML = "";
+
+    resBox.className = "result " + (isYes ? "t" : "f");
+    resBox.innerHTML = isYes
+      ? '<img src="' + IMG_YES + '" alt="是"><span class="big">✔️</span>是'
+      : '<img src="' + IMG_NO  + '" alt="不是"><span class="big">✖️</span>不是';
+  });
+
+  /* ---------- 點擊統計（localStorage） ---------- */
+  const KEY = "shima_votes_v1";
+  function load(){
+    try{ return JSON.parse(localStorage.getItem(KEY)) || {yes:0,no:0}; }
+    catch(e){ return {yes:0,no:0}; }
+  }
+  function save(v){ try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} }
+  function vote(which){
+    const v = load();
+    if(which==="yes") v.yes++; else v.no++;
+    save(v); render(v);
+  }
+  function render(v){
+    const total = v.yes + v.no;
+    const py = total ? Math.round(v.yes/total*100) : 0;
+    const pn = total ? 100 - py : 0;
+    document.getElementById("numY").textContent = v.yes;
+    document.getElementById("numN").textContent = v.no;
+    document.getElementById("pctY").textContent = py + "%";
+    document.getElementById("pctN").textContent = pn + "%";
+    document.getElementById("total").textContent = "共 " + total + " 票";
+    document.getElementById("barY").style.width = (total ? py : 50) + "%";
+    document.getElementById("barN").style.width = (total ? pn : 50) + "%";
+  }
+  render(load());   // 載入時顯示已存的票數
+  document.getElementById("clearVotes").addEventListener("click",()=>{
+    if(confirm("確定要清除目前的票數嗎？此動作無法復原。")){
+      const v = {yes:0, no:0};   // 票數重設為 0
+      save(v);                   // 寫回 localStorage（永久歸零）
+      render(v);                 // 立即更新畫面顯示
+    }
+  });
+</script>
+</body>
+</html>
