@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陳昱凱是gay嗎?</title>
+<style>
+  :root{
+    --panel:rgba(18,26,36,.78); --line:rgba(120,150,175,.28);
+    --txt:#eef4fa; --muted:#aec0d2; --yes:#54b4ff; --no:#f0b429;
+    --accent:#54b4ff;
+    --mono:"SF Mono",ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    color:var(--txt); font-family:system-ui,"Noto Sans TC",sans-serif;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+    padding:28px 16px 48px; line-height:1.6;
+    background:
+      linear-gradient(180deg, rgba(8,12,18,.55) 0%, rgba(8,12,18,.78) 100%),
+      url('images/bg.jpg') center/cover no-repeat fixed;
+  }
+  @supports (-webkit-touch-callout: none){ body{background-attachment:scroll;} }
+  .wrap{width:100%;max-width:480px;}
+  h1{font-size:1.5rem;font-weight:800;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.5);}
+  .sub{color:var(--muted);font-size:.9rem;margin-bottom:24px;text-shadow:0 1px 8px rgba(0,0,0,.5);}
+  .card{background:var(--panel);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);}
+  .label{font-size:.82rem;color:var(--muted);margin-bottom:12px;}
+  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .opt{padding:18px 10px;border-radius:10px;border:1px solid var(--line);
+    background:rgba(255,255,255,.04);color:var(--txt);font-size:1.05rem;cursor:pointer;
+    transition:.15s;text-align:center;font-weight:600;}
+  .opt .emoji{font-size:1.5rem;display:block;margin-bottom:4px;}
+  .opt:active{transform:scale(.97);}
+  .opt.sel[data-val="yes"]{border-color:var(--yes);background:rgba(84,180,255,.16);color:var(--yes);}
+  .opt.sel[data-val="no"]{border-color:var(--no);background:rgba(240,180,41,.16);color:var(--no);}
+  .run{width:100%;padding:15px;border:none;border-radius:10px;background:var(--accent);
+    color:#0f1620;font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:4px;
+    box-shadow:0 6px 20px rgba(84,180,255,.35);}
+  .run:active{transform:scale(.99);}
+  .result{text-align:center;font-size:1.4rem;font-weight:800;padding:20px;
+    border-radius:12px;margin-top:12px;opacity:0;animation:show .4s .1s forwards;}
+  .result .big{font-size:2.2rem;display:block;margin-bottom:6px;}
+  .result img{width:100%;height:200px;object-fit:cover;border-radius:10px;
+    margin-bottom:14px;display:block;box-shadow:0 6px 20px rgba(0,0,0,.4);}
+  .result.t{color:var(--yes);background:rgba(84,180,255,.14);border:1px solid rgba(84,180,255,.35);}
+  .result.f{color:var(--no);background:rgba(240,180,41,.14);border:1px solid rgba(240,180,41,.35);}
+  @keyframes show{to{opacity:1;transform:none;}}
+
+  /* 統計區 */
+  .stat-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .stat-total{font-size:.8rem;color:var(--muted);}
+  .bar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.08);margin-bottom:14px;}
+  .bar .y{background:var(--yes);transition:width .4s;}
+  .bar .n{background:var(--no);transition:width .4s;}
+  .rows{display:grid;gap:10px;}
+  .row{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);}
+  .row .name{font-weight:700;}
+  .row.y .name{color:var(--yes);}
+  .row.n .name{color:var(--no);}
+  .row .num{font-family:var(--mono);font-size:1.05rem;}
+  .row .pct{color:var(--muted);font-size:.8rem;margin-left:8px;}
+  .clear-btn{margin-top:14px;width:100%;padding:10px;border:1px solid var(--line);
+    background:transparent;color:var(--muted);border-radius:9px;font-size:.85rem;
+    cursor:pointer;transition:.15s;}
+  .clear-btn:hover{border-color:var(--no);color:var(--no);background:rgba(240,180,41,.08);}
+  .clear-btn:active{transform:scale(.99);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>陳昱凱是gay嗎?</h1>
+  <div class="sub">到底是不是?</div>
+
+  <div class="card">
+    <div class="label">點選你的答案</div>
+    <div class="inputs">
+      <button class="opt sel" data-val="yes"><span class="emoji">✔️</span>是GAY</button>
+      <button class="opt" data-val="no"><span class="emoji">✖️</span>不是GAY</button>
+    </div>
+  </div>
+
+  <button class="run" id="run">動動你的小手看答案 ▶</button>
+
+  <div class="card" id="out" style="display:none;">
+    <div id="result"></div>
+  </div>
+
+  <div class="card">
+    <div class="stat-head">
+      <div class="label" style="margin:0;">即時票數統計</div>
+      <div class="stat-total" id="total">共 0 票</div>
+    </div>
+    <div class="bar"><div class="y" id="barY" style="width:50%"></div><div class="n" id="barN" style="width:50%"></div></div>
+    <div class="rows">
+      <div class="row y"><div class="name">✔️ 是GAY</div><div><span class="num" id="numY">0</span><span class="pct" id="pctY">0%</span></div></div>
+      <div class="row n"><div class="name">✖️ 不是GAY</div><div><span class="num" id="numN">0</span><span class="pct" id="pctN">0%</span></div></div>
+      <button class="clear-btn" id="clearVotes">清除票數</button>
+      <div class="sync" id="sync"><span class="dot"></span>連線中…</div> 
+  </div>
+</div>
+
+<script type="module">
+  /* ===================================================================
+     ★ 改這裡：Firebase 設定（已填入你的金鑰，要換別的專案才需要改）
+  =================================================================== */
+  const firebaseConfig = {
+    apiKey: "AIzaSyBJEUreZhnhNLADt5YN0RV0598s6YEDUDs",
+    authDomain: "kevin-292b5.firebaseapp.com",
+    projectId: "kevin-292b5",
+    storageBucket: "kevin-292b5.firebasestorage.app",
+    messagingSenderId: "971763770368",
+    appId: "1:971763770368:web:1859e887dc303eba7fe4e5",
+    measurementId: "G-DQP0T0D3BL"
+  };
+  /* =================================================================== */
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, onSnapshot, getDoc, setDoc, updateDoc, increment }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const voteRef = doc(db, "polls", "shima");   // 全站共用的票數文件
+
+  const syncEl = document.getElementById("sync");
+  function setSync(state, text){
+    syncEl.className = "sync " + state;
+    syncEl.innerHTML = '<span class="dot"></span>' + text;
+  }
+
+<script>
+  /* ---------- 是/不是 選擇邏輯 ---------- */
+  let answer = "yes";
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.addEventListener("click",()=>{
+      document.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel");
+      answer = b.dataset.val;   // 只做選取，按「執行」才計票
+    });
+  });
+
+  /* 結果區要顯示的兩張照片（是 / 不是） */
+  const IMG_YES = "images/yes.jpg";
+  const IMG_NO  = "images/no.jpg";
+
+  /* ---------- 執行：顯示結果並計一票（寫進 Firestore） ---------- */
+  const runBtn = document.getElementById("run");
+  runBtn.addEventListener("click", async ()=>{
+    const isYes = (answer === "yes");
+
+    const out = document.getElementById("out");
+    const resBox = document.getElementById("result");
+    out.style.display = "block";
+    resBox.innerHTML = "";
+    resBox.className = "result " + (isYes ? "t" : "f");
+    resBox.innerHTML = isYes
+      ? '<img src="' + IMG_YES + '" alt="是"><span class="big">✔️</span>是'
+      : '<img src="' + IMG_NO  + '" alt="不是"><span class="big">✖️</span>不是';
+
+    runBtn.disabled = true;
+    try{
+      await updateDoc(voteRef, { [answer]: increment(1) });
+    }catch(e){
+      try{
+        await setDoc(voteRef, { yes:0, no:0 }, { merge:true });
+        await updateDoc(voteRef, { [answer]: increment(1) });
+      }catch(e2){
+        setSync("err", "計票失敗，請檢查 Firebase 設定與規則");
+        console.error(e2);
+      }
+    }
+    runBtn.disabled = false;
+  });
+
+  /* ---------- 即時同步：任何人投票，所有人畫面一起更新 ---------- */
+  function render(v){
+    const total = (v.yes||0) + (v.no||0);
+    const py = total ? Math.round(v.yes/total*100) : 0;
+    const pn = total ? 100 - py : 0;
+    document.getElementById("numY").textContent = v.yes||0;
+    document.getElementById("numN").textContent = v.no||0;
+    document.getElementById("pctY").textContent = py + "%";
+    document.getElementById("pctN").textContent = pn + "%";
+    document.getElementById("total").textContent = "共 " + total + " 票";
+    document.getElementById("barY").style.width = (total ? py : 50) + "%";
+    document.getElementById("barN").style.width = (total ? pn : 50) + "%";
+  }
+
+  onSnapshot(voteRef, (snap)=>{
+    const v = snap.exists() ? snap.data() : { yes:0, no:0 };
+    render(v);
+    setSync("ok", "已連線・即時同步中");
+  }, (err)=>{
+    setSync("err", "連線失敗，請檢查 Firebase 設定與規則");
+    console.error(err);
+  });
+
+  (async ()=>{
+    try{
+      const s = await getDoc(voteRef);
+      if(!s.exists()) await setDoc(voteRef, { yes:0, no:0 });
+    }catch(e){ console.error(e); }
+  })();
+
+  /* ---------- 清除票數（會把全站票數歸零，所有人都受影響） ---------- */
+  document.getElementById("clearVotes").addEventListener("click", async ()=>{
+    if(confirm("確定要清除票數嗎？這會把「全站所有訪客」的票數一起歸零，無法復原。")){
+      try{
+        await setDoc(voteRef, { yes:0, no:0 });
+      }catch(e){
+        setSync("err", "清除失敗，請檢查 Firebase 設定與規則");
+        console.error(e);
+      }
+    }
+  });
+</script>
+</body>
+</html>
